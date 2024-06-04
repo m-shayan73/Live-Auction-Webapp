@@ -1,0 +1,24 @@
+.flex {
+  display: flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.pr-40 {
+    padding-right: 40px;
+}
+
+.navbar {
+    position: sticky;
+    top: 0;
+}
+
+.navbar-content {
+    display: flex;
+}
