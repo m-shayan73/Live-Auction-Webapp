@@ -29,7 +29,7 @@ export default function CreateAuction() {
     const handleSubmit = (e: any) => {
         e.preventDefault();
 
-        const createAuction = async (title: String, description: String, startingPrice: String, startingTime: String, endingTime: String, userId: any) => {
+        const createAuction = async (title: string, description: string, startingPrice: string, startingTime: string, endingTime: string, userId: any) => {
             try {
                 const response = await axios.post('http://localhost:8000/api/auction/createauction', {
                     userId,
@@ -56,27 +56,89 @@ export default function CreateAuction() {
     }
 
     return (
-        <div>
+        <div className="bg-gray-100 min-h-screen">
             <Navbar />
-            <h1>Create Auction</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="title">Title:</label>
-                <input type="text" id="title" name="title" required value={formData.title} onChange={handleChange} />
+            <div className="container mx-auto py-8 px-4">
+                <div className="bg-white p-8 rounded-lg shadow-md">
+                    <h1 className="text-2xl font-bold mb-6 text-center">Create Auction</h1>
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div>
+                            <label htmlFor="title" className="block text-gray-700">Title:</label>
+                            <input
+                                type="text"
+                                id="title"
+                                name="title"
+                                required
+                                value={formData.title}
+                                onChange={handleChange}
+                                className="w-full px-3 py-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            />
+                        </div>
 
-                <label htmlFor="description">Description:</label>
-                <textarea id="description" name="description" required value={formData.description} onChange={handleChange}></textarea>
+                        <div>
+                            <label htmlFor="description" className="block text-gray-700">Description:</label>
+                            <textarea
+                                id="description"
+                                name="description"
+                                required
+                                value={formData.description}
+                                onChange={handleChange}
+                                className="w-full px-3 py-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            ></textarea>
+                        </div>
 
-                <label htmlFor="startingPrice">Starting Price:</label>
-                <input type="number" id="startingPrice" name="startingPrice" min="0" step="1" required value={formData.startingPrice} onChange={handleChange} />
+                        <div>
+                            <label htmlFor="startingPrice" className="block text-gray-700">Starting Price:</label>
+                            <input
+                                type="number"
+                                id="startingPrice"
+                                name="startingPrice"
+                                min="0"
+                                step="1"
+                                required
+                                value={formData.startingPrice}
+                                onChange={handleChange}
+                                className="w-full px-3 py-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            />
+                        </div>
 
-                <label htmlFor="startingTime">Start Time:</label>
-                <input type="datetime-local" id="startingTime" name="startingTime" required value={formData.startingTime} onChange={handleChange} />
+                        <div>
+                            <label htmlFor="startingTime" className="block text-gray-700">Start Time:</label>
+                            <input
+                                type="datetime-local"
+                                id="startingTime"
+                                name="startingTime"
+                                required
+                                value={formData.startingTime}
+                                onChange={handleChange}
+                                className="w-full px-3 py-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            />
+                        </div>
 
-                <label htmlFor="endingTime">End Time:</label>
-                <input type="datetime-local" id="endingTime" name="endingTime" required value={formData.endingTime} onChange={handleChange} />
+                        <div>
+                            <label htmlFor="endingTime" className="block text-gray-700">End Time:</label>
+                            <input
+                                type="datetime-local"
+                                id="endingTime"
+                                name="endingTime"
+                                required
+                                value={formData.endingTime}
+                                onChange={handleChange}
+                                className="w-full px-3 py-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            />
+                        </div>
 
-                <button type="submit">Create Auction</button>
-            </form>
+                        <div className="text-center">
+                            <button
+                                type="submit"
+                                className="w-full bg-indigo-500 text-white py-2 rounded hover:bg-indigo-600 transition duration-200"
+                            >
+                                Create Auction
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     );
 }

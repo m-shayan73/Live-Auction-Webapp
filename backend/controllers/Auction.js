@@ -21,13 +21,11 @@ export function checkAuctionEndTime(auction) {
             }, timeToStart);
         }
         else {
-            setTimeout(() => {
-                Auction.updateOne({ _id: auctionId }, { status: 'ongoing' }).then(() => {
-                    console.log(`${auctionId} started`);
-                }).catch(error => {
-                    console.error(`Failed to update auction ${auctionId}:`, error);
-                });
-            }, timeToStart);
+            Auction.updateOne({ _id: auctionId }, { status: 'ongoing' }).then(() => {
+                console.log(`${auctionId} started`);
+            }).catch(error => {
+                console.error(`Failed to update auction ${auctionId}:`, error);
+            });
         }
     }
 
@@ -37,7 +35,7 @@ export function checkAuctionEndTime(auction) {
 
     if (delay > 0) {
         setTimeout(() => {
-            Auction.updateOne({ _id: auctionId }, { status: 'completed' }).then(() => {
+            Auction.updateOne({ _id: auctionId }, { $set: { status: 'completed' } }).then(() => {
                 io.to(auctionId.toString()).emit('auctionEnded', 'This auction has ended.');
 
                 Auction.findById(auctionId).then(auction => {
@@ -60,7 +58,8 @@ export function checkAuctionEndTime(auction) {
         }, delay);
     }
     else {
-        Auction.updateOne({ _id: auctionId }, { status: 'completed' }).then(() => {
+        console.log("here",)
+        Auction.updateOne({ _id: auctionId }, { $set: { status: 'completed' } }).then(() => {
             io.to(auctionId.toString()).emit('auctionEnded', 'This auction has ended.');
 
             Auction.findById(auctionId).then(auction => {
