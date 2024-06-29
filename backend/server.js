@@ -45,6 +45,7 @@ server.listen(8000, () => {
 });
 
 try {
+  console.log("Hello, ", process.env.MONG_URI)
   mongoose
     .connect(process.env.MONG_URI)
     .then(() => {
@@ -104,6 +105,7 @@ async function updateAuctionBid(auctionId, bidAmount, userId, socket) {
 // Initial Check
 app.get('/', (req, res) => {
   res.send('Hello');
+  console.log("LOL, ", process.env.MONG_URI)
 });
 
 export default app;
