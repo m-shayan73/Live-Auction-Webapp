@@ -11,7 +11,7 @@ export default function Login() {
 
     const login = async (username, password) => {
         try {
-            const response = await axios.post('http://localhost:8000/api/user/login', {
+            const response = await axios.post('https://live-auction-api.vercel.app/api/user/login', {
                 username,
                 password
             });
