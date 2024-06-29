@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -9,7 +10,7 @@ export default function Login() {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
 
-    const login = async (username, password) => {
+    const login = async (username: string, password: string) => {
         try {
             const response = await axios.post('https://live-auction-api.vercel.app/api/user/login', {
                 username,
@@ -19,21 +20,21 @@ export default function Login() {
             localStorage.setItem('userId', response.data.user.id);
             localStorage.setItem('username', response.data.user.username);
             navigate('/home');
-        } catch (error) {
+        } catch (error: any) {
             toast.error(`Login Failed: ${error.response?.data?.message || error.message}`);
 
         }
     };
 
-    function changeUserName(e) {
+    function changeUserName(e: any) {
         setUserName(e.target.value);
     }
 
-    function changePassword(e) {
+    function changePassword(e: any) {
         setPassword(e.target.value);
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: any) => {
         e.preventDefault();
         console.log(username, password);
 

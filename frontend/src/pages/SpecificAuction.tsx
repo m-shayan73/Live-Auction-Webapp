@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -37,7 +38,7 @@ export default function SpecificAuction() {
 
         socket.emit('joinAuction', auctionId);
 
-        socket.on('updateAuction', ({ highestBidder }) => {
+        socket.on('updateAuction', ( highestBidder: any ) => {
             console.log(highestBidder);
             alert(`${highestBidder} placed a bid; Current Price Updated`);
             setBidAmount('');

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -12,7 +13,7 @@ export default function SignupForm() {
 
     const signup = async (name: string, username: string, password: string) => {
         try {
-            const response = await axios.post('http://localhost:8000/api/user/signup', {
+            await axios.post('http://localhost:8000/api/user/signup', {
                 name,
                 username,
                 password

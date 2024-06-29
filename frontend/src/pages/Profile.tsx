@@ -1,12 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
+interface UserDetails {
+    name: string;
+    username: string;
+    password: string;
+    itemsOwned: string[];
+    auctionsCreated: string[];
+    image: string;
+}
+
 export default function Profile() {
     const navigate = useNavigate()
     const userId = localStorage.getItem('userId');
-    const [userDetails, setUserDetails] = useState(null);
+    const [userDetails, setUserDetails] = useState<UserDetails>();
     const [auctions, setAuctions] = useState([]);
 
     useEffect(() => {
@@ -96,7 +106,7 @@ export default function Profile() {
                 <div>
                     <h3 className="text-2xl font-bold mb-4 text-gray-700">My Auctions</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {auctions.map((auction, index) => (
+                        {auctions.map((auction: any, index) => (
                             <div key={index} className="border rounded-lg overflow-hidden shadow-lg bg-white mb-4">
                                 <div className="p-4">
                                     <div className="flex items-center mb-2">

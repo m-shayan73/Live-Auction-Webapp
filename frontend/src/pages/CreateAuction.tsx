@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -31,7 +32,7 @@ export default function CreateAuction() {
 
         const createAuction = async (title: string, description: string, startingPrice: string, startingTime: string, endingTime: string, userId: any) => {
             try {
-                const response = await axios.post('http://localhost:8000/api/auction/createauction', {
+                await axios.post('http://localhost:8000/api/auction/createauction', {
                     userId,
                     title,
                     description,
