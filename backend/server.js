@@ -15,7 +15,7 @@ const server = http.createServer(app);
 export const io = new Server(server, {
   cors: {
     origin: "*",
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT"],
   },
 });
 
@@ -99,9 +99,3 @@ async function updateAuctionBid(auctionId, bidAmount, userId, socket) {
     console.error('Error fetching or updating auction:', error);
   }
 }
-
-
-// Initial Check
-app.get('/', (req, res) => {
-  res.send('Hello');
-});
