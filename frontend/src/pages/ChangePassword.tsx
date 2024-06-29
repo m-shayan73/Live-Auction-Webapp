@@ -19,7 +19,7 @@ export default function ChangePasswordForm() {
     e.preventDefault();
 
     try {
-      const response = await axios.put('http://localhost:8000/api/user/changepassword', {
+      const response = await axios.put('https://live-auction-api.vercel.app/api/user/changepassword', {
         userId,
         oldPassword,
         newPassword,

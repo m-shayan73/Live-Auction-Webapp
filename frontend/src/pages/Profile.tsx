@@ -28,7 +28,7 @@ export default function Profile() {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/api/user/getuser/${userId}`);
+                const response = await axios.get(`https://live-auction-api.vercel.app/api/user/getuser/${userId}`);
                 console.log(response.data)
                 setUserDetails(response.data);
             } catch (error) {
@@ -45,7 +45,7 @@ export default function Profile() {
         const fetchAuctions = async () => {
             if (userDetails && userDetails.auctionsCreated.length > 0) {
                 try {
-                    const response = await axios.post('http://localhost:8000/api/auction/getauctions', {
+                    const response = await axios.post('https://live-auction-api.vercel.app/api/auction/getauctions', {
                         ids: userDetails.auctionsCreated
                     });
                     setAuctions(response.data);
