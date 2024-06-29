@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
+import defaultUser from "../assets/user.png"
+
 interface UserDetails {
     name: string;
     username: string;
@@ -62,7 +64,7 @@ export default function Profile() {
         return;
     }
 
-    const userImage = userDetails.image || "/src/assets/user.png"
+    const userImage = userDetails.image || defaultUser;
 
     return (
         <div className='bg-gray-100 min-h-screen'>
