@@ -46,7 +46,7 @@ export default function Login() {
         console.log(username, password);
 
         if (!username || !password) {
-            alert('Details missing');
+            toast.error('Details missing');
         }
         else {
             login(username, password);

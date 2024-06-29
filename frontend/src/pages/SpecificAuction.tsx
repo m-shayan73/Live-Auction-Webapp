@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import io from 'socket.io-client';
 import Navbar from '../components/Navbar';
 
@@ -95,7 +96,7 @@ export default function SpecificAuction() {
         if (!isNaN(bidAmountNumber) && bidAmountNumber > auctionDetails.currentPrice) {
             socket.emit('placeBid', { auctionId: auctionId, bidAmount: bidAmountNumber, username: username, userId: userId });
         } else {
-            alert('Your bid must be higher than the current going price.');
+            toast.error('Your bid must be higher than the current going price.');
         }
     };
 

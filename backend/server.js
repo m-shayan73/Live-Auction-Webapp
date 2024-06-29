@@ -24,6 +24,7 @@ config({
   path: "./config.env",
 });
 
+
 io.on("connection", (socket) => {
   console.log("USER CONNECTED:", socket.id);
 
@@ -45,8 +46,8 @@ server.listen(8000, () => {
   console.log("Server is running on port 8000");
 });
 
+
 try {
-  console.log("Hello, ", process.env.MONG_URI)
   mongoose
     .connect(process.env.MONG_URI)
     .then(() => {
@@ -74,9 +75,9 @@ try {
   console.log(err);
 }
 
+
 app.use("/api/user", userRoute);
 app.use("/api/auction", auctionRoute);
-
 
 async function updateAuctionBid(auctionId, bidAmount, userId, socket) {
   try {
@@ -102,11 +103,9 @@ async function updateAuctionBid(auctionId, bidAmount, userId, socket) {
   }
 }
 
-
 // Initial Check
 app.get('/', (req, res) => {
   res.send('Hello');
-  console.log("LOL, ", process.env.MONG_URI)
 });
 
-export default app;
+export default server;

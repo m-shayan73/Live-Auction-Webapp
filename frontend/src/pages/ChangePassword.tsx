@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Navbar from '../components/Navbar';
 
 export default function ChangePasswordForm() {
@@ -24,7 +25,7 @@ export default function ChangePasswordForm() {
         oldPassword,
         newPassword,
       });
-      alert(response.data.message);
+      toast.success(response.data.message);
       navigate('/home');
     } catch (error) {
       console.error('Password change error:', error);

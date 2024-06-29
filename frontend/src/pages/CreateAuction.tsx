@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Navbar from '../components/Navbar';
 
 export default function CreateAuction() {
@@ -40,16 +41,16 @@ export default function CreateAuction() {
                     startingTime,
                     endingTime,
                 });
-                alert('Auction created successfuly');
+                toast.success('Auction created successfuly');
                 navigate('/home');
             } catch (error: any) {
                 console.error('create error:', error);
-                alert(`Failed to create auction: ${error.response.data.message}`);
+                toast.error(`Failed to create auction: ${error.response.data.message}`);
             }
         };
 
         if (!formData.title || !formData.description || !formData.startingPrice || !formData.startingTime || !formData.endingTime) {
-            alert('Details missing');
+            toast.error('Details missing');
         }
         else {
             createAuction(formData.title, formData.description, formData.startingPrice, formData.startingTime, formData.endingTime, userId);
