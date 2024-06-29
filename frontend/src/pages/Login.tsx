@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from "axios";
@@ -9,6 +9,13 @@ export default function Login() {
 
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
+
+    const userId = localStorage.getItem('userId');
+    useEffect(() => {
+        if (userId) {
+            navigate('/home');
+        }
+    }, [userId, navigate]);
 
     const login = async (username: string, password: string) => {
         try {
