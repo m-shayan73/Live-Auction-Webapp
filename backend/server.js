@@ -99,3 +99,9 @@ async function updateAuctionBid(auctionId, bidAmount, userId, socket) {
     console.error('Error fetching or updating auction:', error);
   }
 }
+
+
+// Initial Check
+app.get('/', (req, res) => {
+  res.send('Hello');
+});
