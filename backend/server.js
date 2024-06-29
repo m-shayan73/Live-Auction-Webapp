@@ -105,3 +105,5 @@ async function updateAuctionBid(auctionId, bidAmount, userId, socket) {
 app.get('/', (req, res) => {
   res.send('Hello');
 });
+
+export default app;
