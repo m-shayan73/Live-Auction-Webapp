@@ -13,7 +13,7 @@ export default function SignupForm() {
 
     const signup = async (name: string, username: string, password: string) => {
         try {
-            await axios.post('https://live-auction-api.vercel.app/api/user/signup', {
+            await axios.post('http://localhost:8000/api/user/signup', {
                 name,
                 username,
                 password

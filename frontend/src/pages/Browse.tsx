@@ -32,7 +32,7 @@ export default function Browse() {
     useEffect(() => {
         const fetchAuctions = async () => {
             try {
-                const response = await axios.get('https://live-auction-api.vercel.app/api/auction/getallauctions');
+                const response = await axios.get('http://localhost:8000/api/auction/getallauctions');
                 setAuctions(response.data);
             } catch (error) {
                 console.error('Failed to fetch auctions', error);
@@ -46,7 +46,7 @@ export default function Browse() {
 
     const handleSearch = async () => {
         try {
-            const response = await axios.get(`https://live-auction-api.vercel.app/api/auction/search?query=${query}`);
+            const response = await axios.get(`http://localhost:8000/api/auction/search?query=${query}`);
             setAuctions(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);

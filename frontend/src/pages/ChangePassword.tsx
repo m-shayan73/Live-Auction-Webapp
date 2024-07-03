@@ -20,7 +20,7 @@ export default function ChangePasswordForm() {
     e.preventDefault();
 
     try {
-      const response = await axios.put('https://live-auction-api.vercel.app/api/user/changepassword', {
+      const response = await axios.put('http://localhost:8000/api/user/changepassword', {
         userId,
         oldPassword,
         newPassword,
@@ -35,22 +35,37 @@ export default function ChangePasswordForm() {
   return (
     <>
       <Navbar />
-      <form onSubmit={handleChangePassword}>
-        <label>Old Password:</label>
-        <input
-          type="password"
-          value={oldPassword}
-          onChange={(e) => setOldPassword(e.target.value)}
-        />
-        <label>New Password:</label>
-        <input
-          type="password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-        />
-        <button type="submit">Change Password</button>
-      </form>
+      <div className="flex justify-center items-center bg-gray-100" style={{ minHeight: 'calc(100vh - 64px)' }}>
+        <form onSubmit={handleChangePassword} className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+          <h2 className="text-2xl font-bold mb-6 text-center">Change Password</h2>
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">Old Password:</label>
+            <input
+              type="password"
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-700 mb-2">New Password:</label>
+            <input
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Change Password
+          </button>
+        </form>
+      </div>
     </>
-
   );
 }

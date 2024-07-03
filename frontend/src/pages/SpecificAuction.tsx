@@ -35,18 +35,18 @@ export default function SpecificAuction() {
     const [auctionDetails, setAuctionDetails] = useState<AuctionDetails>()
 
     useEffect(() => {
-        socket = io('https://live-auction-api.vercel.app');
+        socket = io('http://localhost:8000');
 
         socket.emit('joinAuction', auctionId);
 
         socket.on('updateAuction', ( highestBidder: any ) => {
             console.log(highestBidder);
-            alert(`${highestBidder} placed a bid; Current Price Updated`);
+            alert(`${highestBidder.highestBidder} placed a bid; Current Price Updated`);
             setBidAmount('');
 
             const fetchAuctions = async () => {
                 try {
-                    const response = await axios.post('https://live-auction-api.vercel.app/api/auction/getauctions', {
+                    const response = await axios.post('http://localhost:8000/api/auction/getauctions', {
                         ids: [auctionId]
                     });
                     setAuctionDetails(response.data[0]);
@@ -72,7 +72,7 @@ export default function SpecificAuction() {
     useEffect(() => {
         const fetchAuctions = async () => {
             try {
-                const response = await axios.post('https://live-auction-api.vercel.app/api/auction/getauctions', {
+                const response = await axios.post('http://localhost:8000/api/auction/getauctions', {
                     ids: [auctionId]
                 });
                 setAuctionDetails(response.data[0]);

@@ -33,7 +33,7 @@ export default function CreateAuction() {
 
         const createAuction = async (title: string, description: string, startingPrice: string, startingTime: string, endingTime: string, userId: any) => {
             try {
-                await axios.post('https://live-auction-api.vercel.app/api/auction/createauction', {
+                await axios.post('http://localhost:8000/api/auction/createauction', {
                     userId,
                     title,
                     description,
