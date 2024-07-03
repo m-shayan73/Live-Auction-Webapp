@@ -16,7 +16,7 @@ config({
 const server = http.createServer(app);
 
 // Set up Socket.IO
-const io = new Server(server, {
+export const io = new Server(server, {
   cors: {
     origin: "*", // Replace "*" with your frontend URL for better security
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
