@@ -1,29 +1,28 @@
-import { Socket, Server } from "socket.io";
+import { Server } from "socket.io";
 import http from "http";
-import app from "./app.js";
+import { app } from "./app.js";
 import { config } from "dotenv";
 import mongoose from "mongoose";
 
-import userRoute from "./routes/User.js";
-import auctionRoute from "./routes/Auction.js";
-
 import Auction from "./models/Auction.js";
-
 import { checkAuctionEndTime } from "./controllers/Auction.js";
 
+// Load environment variables
+config({
+  path: "./.env",
+});
+
+// Create HTTP server
 const server = http.createServer(app);
-export const io = new Server(server, {
+
+// Set up Socket.IO
+const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: "*", // Replace "*" with your frontend URL for better security
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
   },
 });
-
-config({
-  path: "./config.env",
-});
-
 
 io.on("connection", (socket) => {
   console.log("USER CONNECTED:", socket.id);
@@ -32,8 +31,8 @@ io.on("connection", (socket) => {
     socket.join(auctionId);
   });
 
-  socket.on('placeBid', ({ auctionId, bidAmount, username, userId }) => {
-    updateAuctionBid(auctionId, bidAmount, userId);
+  socket.on('placeBid', async ({ auctionId, bidAmount, username, userId }) => {
+    await updateAuctionBid(auctionId, bidAmount, userId);
     io.to(auctionId).emit('updateAuction', { highestBidder: username });
   });
 
@@ -42,46 +41,8 @@ io.on("connection", (socket) => {
   });
 });
 
-if (!server.listening) {
-  server.listen(8000, () => {
-    console.log("Server is running on port 8000");
-  });
-}
-
-
-try {
-  mongoose
-    .connect(process.env.MONG_URI)
-    .then(() => {
-      console.log("Connected to Database");
-
-      const setupAuctionEndTimes = async () => {
-        try {
-          const auctions = await Auction.find({ status: { $ne: 'completed' } });
-          console.log(auctions)
-          auctions.forEach(auction => {
-            console.log(`Checking: ${auction}`);
-            checkAuctionEndTime(auction);
-          });
-        } catch (error) {
-          console.error('Failed to set up auction end times:', error);
-        }
-      };
-
-      setupAuctionEndTimes();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-} catch (err) {
-  console.log(err);
-}
-
-
-app.use("/api/user", userRoute);
-app.use("/api/auction", auctionRoute);
-
-async function updateAuctionBid(auctionId, bidAmount, userId, socket) {
+// Function to update auction bids
+async function updateAuctionBid(auctionId, bidAmount, userId) {
   try {
     const currentAuction = await Auction.findById(auctionId);
 
@@ -96,7 +57,6 @@ async function updateAuctionBid(auctionId, bidAmount, userId, socket) {
 
       const updatedAuction = await currentAuction.save();
       console.log('Auction updated successfully:', updatedAuction);
-      // io.to(auctionId).emit('updateAuction', updatedAuction.username);
     } else {
       console.log('Bid is not higher than the current price');
     }
@@ -105,9 +65,39 @@ async function updateAuctionBid(auctionId, bidAmount, userId, socket) {
   }
 }
 
-// Initial Check
-app.get('/', (req, res) => {
-  res.send('Hello');
-});
+// Connect to MongoDB
+mongoose
+  .connect(process.env.MONG_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log("Connected to Database");
 
+    const setupAuctionEndTimes = async () => {
+      try {
+        const auctions = await Auction.find({ status: { $ne: 'completed' } });
+        console.log(auctions);
+        auctions.forEach(auction => {
+          console.log(`Checking: ${auction}`);
+          checkAuctionEndTime(auction);
+        });
+      } catch (error) {
+        console.error('Failed to set up auction end times:', error);
+      }
+    };
+
+    setupAuctionEndTimes();
+  })
+  .catch((error) => {
+    console.error('Database connection error:', error);
+    process.exit(1);
+  });
+
+// Start the server only once
+const PORT = process.env.PORT || 8000;
+if (!server.listening) {
+  server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
+
+// Export the server for Vercel
 export default server;
