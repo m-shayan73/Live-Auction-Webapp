@@ -12,7 +12,7 @@ import Auction from "./models/Auction.js";
 import { checkAuctionEndTime } from "./controllers/Auction.js";
 
 const server = http.createServer(app);
-const io = new Server(server, {
+export const io = new Server(server, {
   cors: {
     origin: "*",
     methods: ["GET", "POST", "PUT"],
