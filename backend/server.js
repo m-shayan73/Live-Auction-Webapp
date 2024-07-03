@@ -12,7 +12,7 @@ import Auction from "./models/Auction.js";
 import { checkAuctionEndTime } from "./controllers/Auction.js";
 
 const server = http.createServer(app);
-export const io = new Server(server, {
+const io = new Server(server, {
   cors: {
     origin: "*",
     methods: ["GET", "POST", "PUT"],
@@ -42,9 +42,11 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(8000, () => {
-  console.log("Server is running on port 8000");
-});
+if (!server.listening) {
+  server.listen(8000, () => {
+    console.log("Server is running on port 8000");
+  });
+}
 
 
 try {
